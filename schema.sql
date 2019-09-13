@@ -21,3 +21,6 @@ VALUES ("Bamazon Basics Type-C USB 5ft","Electronic Accessories",4.99,50),
 ("Under Armour Men's Charged Cotton 2.0 Crew Socks, 6-Pair","Clothing",17.99,30),
 ("Rolex Cosmograph Daytona Ice Blue Dial Platinum Mens Watch 116506IBLSO","Watches",69995.00,1);
 SELECT * FROM products;
+
+UPDATE products SET stock_quantity = 15 WHERE item_id = 2;
+SELECT * FROM products WHERE item_id = 4;

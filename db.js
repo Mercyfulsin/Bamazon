@@ -35,7 +35,7 @@ var db = function () {
         }).then(reply => {
             connection.query('SELECT * FROM products WHERE item_id = ?', [reply.choice], (e, r) => {
                 if (e) throw e;
-                r.length === 0  || r[0].stock_quantity === 0 ? (console.log("Sorry that isn't an item or we are out of stock"), func()) : this.purchase(r[0], func);
+                r.length === 0 || r[0].stock_quantity === 0 ? (console.log("Sorry that isn't an item or we are out of stock"), func()) : this.purchase(r[0], func);
             });
         });
     }
@@ -44,14 +44,14 @@ var db = function () {
         inquirer.prompt({
             name: "amount",
             message: "How many would you like to buy?",
-            type: "input"
+            type: "number"
         }).then(reply => {
             let amount = parseInt(reply.amount);
-            amount && amount <= obj.stock_quantity ? (amount < 0 ? amount = 0 : (console.log(`Successfully purchased ${amount} ${obj.product_name}`), this.remove(obj.item_id, obj.stock_quantity - amount,func))) : (console.log("Sorry that isn't a valid input, try again!"), this.purchase(obj, func));
+            amount && amount <= obj.stock_quantity ? (amount < 0 ? amount = 0 : '', console.log(`Successfully purchased ${amount} ${obj.product_name}`), this.remove(obj.item_id, obj.stock_quantity - amount, func)) : (console.log("Sorry that isn't a valid input, try again!"), this.purchase(obj, func));
         });
     }
-    this.remove = function (id,amount,func) {
-        connection.query('UPDATE products SET stock_quantity= ? WHERE item_id = ?',[amount,id],(e)=>{
+    this.remove = function (id, amount, func) {
+        connection.query('UPDATE products SET stock_quantity= ? WHERE item_id = ?', [amount, id], (e) => {
             if (e) throw e;
             console.log("Successfully updated!");
             func();
